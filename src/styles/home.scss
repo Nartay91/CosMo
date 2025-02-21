@@ -1,0 +1,16 @@
+.home__page {
+    display: flex;
+    flex-direction: column;
+    width: 1129px;
+    
+    justify-content: center;
+    align-items: center;
+}
+.rows__blocks {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    margin-top: 24px;
+    margin-left: 32px;
+    margin-bottom: 32px;
+}

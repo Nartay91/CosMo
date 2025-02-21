@@ -1,0 +1,37 @@
+.best-students {
+    display: flex;
+    flex-direction: column;
+    width: 490px;
+    height: 490px;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 32px;
+}
+.best-students__title {
+    display: flex;
+    font-size: 20px;
+    font-weight: 600;
+    width: 404px;
+    height: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #D1D1D1;
+}
+.best-students__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    width: 500px;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    margin: 0;
+}
+
+.not-started__name {
+    padding: 0px;
+    margin: 0px;
+}
+.not-started__score {
+    padding: 0px;
+    margin: 0px;
+}
