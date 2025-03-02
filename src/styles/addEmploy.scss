@@ -1,0 +1,108 @@
+.form__add {
+    // position: fixed;
+    // top: 0;
+    // left: 0;
+    // width: 100%;
+    // height: 100%;
+    // color: #fff;
+    // background: rgba(0, 0, 0, 0.5);
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
+    .error {
+      color: red;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+    h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+  
+    .form-group {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      gap: 16px;
+
+      .branch__form {
+        width: 350px;
+      }
+  
+      label {
+        display: block;
+        font-weight: bold;
+        font-size: 14px;
+        // margin-bottom: 5px;
+      }
+  
+      .input-group {
+        display: flex;
+        gap: 10px;
+      }
+  
+      input {
+        font-size: 16px;
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        
+      }
+      .name_input {
+        width: 170px;
+        outline: none;
+        height: 20px;
+        &:hover {
+          border-color: #006FFD;
+        }
+        
+    }
+    .email_input {
+      width: 369px;
+      height: 20px;
+      outline: none;
+      &:hover {
+        border-color: #006FFD;
+      }
+    }
+      
+    }
+  
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      outline: none;
+      border: none;
+  
+      .cancel {
+        background: #fff;
+        color: #000;
+        border: 2px solid #D1D1D1;
+        padding: 8px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        &:hover {
+          border-color: #df3d60;
+          background: #b1b4bb;
+      }
+    }
+  
+      .submit {
+        background: #fff;
+        color: #000;
+        border: 2px solid #D1D1D1;
+        padding: 8px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        &:hover {
+          border-color: #2cb92c;
+          background: #b1b4bb;
+      }
+    }
+    }
+  }
