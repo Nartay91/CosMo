@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import useUsersStore from "../store/userStores";
 import "../styles/employers.scss";
 import AddEmploy from "../components/addEmploy";
@@ -8,10 +9,36 @@ import edit from "../assets/edit.svg";
 import remove from "../assets/delete.svg";
 import find from "../assets/search.svg";
 
-const roles = ["Учитель", "Ученик", "Куратор", "Родитель", "Администратор"];
-const statuses = ["Активен", "Деактивирован"];
 
-export default function Employers() {
+function Employers() {
+  const { t } = useTranslation();
+
+  const roles = [
+    { name: t("roles.teacher"), value: "Учитель" },
+    { name: t("roles.student"), value: "Ученик" },
+    { name: t("roles.curator"), value: "Куратор" },
+    { name: t("roles.parent"), value: "Родитель" },
+    { name: t("roles.admin"), value: "Администратор" }
+  ];
+
+  const statuses = [
+    { name: t("statuses.active"), value: "Активен" },
+    { name: t("statuses.deactivated"), value: "Деактивирован" }
+  ];
+
+  const roleMapping = {
+    "Учитель": "teacher",
+    "Ученик": "student",
+    "Куратор": "curator",
+    "Родитель": "parent",
+    "Администратор": "admin"
+  };
+  
+  const statusMapping = {
+    "Активен": "active",
+    "Деактивирован": "deactivated"
+  };
+  
   const { users, filterRole, filterStatus, setRoleFilter, setStatusFilter, updateUser, deleteUsers, addUser } = useUsersStore();
   const [search, setSearch] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,7 +48,6 @@ export default function Employers() {
   const [selectedUsers, setSelectedUsers] = useState(new Set());
   const [error, setError] = useState("");
 
-  
   useEffect(() => {
     localStorage.removeItem("users"); // Удаляет только пользователей
   }, []);
@@ -52,7 +78,7 @@ export default function Employers() {
 
   const handleAddUser = (newUser) => {
     if (!newUser.name || !newUser.role || !newUser.status) {
-      setError("Все поля должны быть заполнены!");
+      setError(t("error.fillAllFields"));
       return;
     }
     addUser(newUser);
@@ -78,20 +104,20 @@ export default function Employers() {
   return (
     <div className={`user-table ${modalType ? "modal-open" : ""}`}>
       <div className="header__employer">
-        <h2>Пользователи</h2>
+        <h2>{t("users")}</h2>
         <div className="actions">
           <button className="add" onClick={() => setModalType("add")}>
-            <img src={add} alt="" /> <p>Добавить</p></button>
+            <img src={add} alt="" /> <p>{t("add")}</p></button>
           <button className="edit" onClick={() => selectedUser && setModalType("edit")} disabled={!selectedUser}>
-            <img src={edit} alt="" /> Редактировать
+            <img src={edit} alt="" /> {t("edit")}
           </button>
           <button className={`delete ${isDeleteMode ? "active" : ""}`} onClick={toggleDeleteMode}>
-            <img src={remove} alt="" />{isDeleteMode ? "Подтвердить" : "Удалить"}
+            <img src={remove} alt="" />{isDeleteMode ? t("confirm_delete") : t("delete")}
           </button>
           <div className="search__employ">
           <img src={find} alt="" />
-          <input type="text" placeholder="Поиск..." value={search} onChange={(e) => setSearch(e.target.value)} />
-          <button className="search__btn" onClick={() => setSearchQuery(search)} disabled={modalType}> Найти
+          <input type="text" placeholder={t("search")} value={search} onChange={(e) => setSearch(e.target.value)} />
+          <button className="search__btn" onClick={() => setSearchQuery(search)} disabled={modalType}> {t("find")}
           </button>
           </div>
         </div>
@@ -101,22 +127,23 @@ export default function Employers() {
 
       <div className="user-list">
       <div className="filters">
-        <p className="chapter">Пользователи</p>
+        <p className="chapter">{t("users")}</p>
         <select className="chapter" value={filterRole} onChange={(e) => setRoleFilter(e.target.value)}>
-          <option value="">Роль</option>
-          {roles.map((role) => (
-            <option key={role} value={role}>{role}</option>
+          <option value="">{t("role")}</option>
+            {roles.map((role) => (
+          <option key={role.value} value={role.value}>{role.name}</option>
           ))}
         </select>
 
         <select className="chapter" value={filterStatus} onChange={(e) => setStatusFilter(e.target.value)}>
-          <option value="">Статус</option>
-          {statuses.map((status) => (
-            <option key={status} value={status}>{status}</option>
+          <option value="">{t("status")}</option>
+            {statuses.map((status) => (
+          <option key={status.value} value={status.value}>{status.name}</option>
           ))}
         </select>
-        <p className="chapter">Монеты</p>
-        <p className="chapter">Изменить статус</p>
+
+        <p className="chapter">{t("coins")}</p>
+        <p className="chapter">{t("changeStatus")}</p>
       </div>
         {filteredUsers.length > 0 ? (
           filteredUsers.map((user) => (
@@ -125,9 +152,13 @@ export default function Employers() {
               <img src={user.avatar} alt={user.name} className="user-avatar" />
               <span className="user-name">{user.name}</span>
               </div>
-              <span className="user-role">{user.role}</span>
-              <span className="user-status">{user.status}</span>
-              <span className="user-coins">{user.coins} монет</span>
+               <span className="user-role">
+                {t(`roles.${roleMapping[user.role]}`)}
+              </span>
+              <span className="user-status">
+                {t(`statuses.${statusMapping[user.status]}`)}
+              </span>
+              <span className="user-coins">{user.coins} {t("coins")}</span>
               <label className="switch">
                 <input
                   type="checkbox"
@@ -139,10 +170,9 @@ export default function Employers() {
             </div>
           ))
         ) : (
-          <p className="no-results">Пользователи не найдены</p>
+          <p className="no-results">{t("noUsersFound")}</p>
         )}
       </div>
-
       {modalType && (
         <div className="modal-overlay">
           <div className="modal">
@@ -154,3 +184,5 @@ export default function Employers() {
     </div>
   );
 }
+
+export default Employers;

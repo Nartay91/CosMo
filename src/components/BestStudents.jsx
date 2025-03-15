@@ -1,9 +1,10 @@
 import useWebinarsStore from "../store/webinarsStore";
 import "../styles/students.scss";
 import user1 from "../assets/user1.svg";
+import ProgressBar from "./course/ProgressBar"; // Подключаем ProgressBar
 
 const BestStudents = () => {
-  const { webinars, updateProgress, getBestStudents } = useWebinarsStore();
+  const { webinars, getBestStudents } = useWebinarsStore();
   const bestStudents = getBestStudents();
 
   return (
@@ -11,20 +12,10 @@ const BestStudents = () => {
       <h3 className="best-students__title">Лучшие студенты</h3>
       {webinars.map((webinar) => (
         <div key={webinar.id} className="best-students__webinar">
-          <p>Вебинар {webinar.date}</p>
+          <p className="webinar-title">Вебинар {webinar.date}</p>
           <div className="best-students__progress-bar">
-            <div
-              className="best-students__progress"
-              style={{ width: `${webinar.progress}%` }}
-            />
+            <ProgressBar progress={webinar.progress} />
           </div>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={webinar.progress}
-            onChange={(e) => updateProgress(webinar.id, Number(e.target.value))}
-          />
         </div>
       ))}
       
@@ -37,8 +28,6 @@ const BestStudents = () => {
           </div>
         </div>
       ))}
-
-      
     </div>
   );
 };
