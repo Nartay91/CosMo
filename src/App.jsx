@@ -8,7 +8,9 @@ import './App.css';
 function App() {
   return (
     <div className="App">
+      <div className='left_side'>
       <Sidebar /> {/* Рендерим Sidebar */}
+      </div>
       <div className="main_box">
         <Header />  {/* Рендерим Header */}
         <div className="main-layout">
